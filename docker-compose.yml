@@ -1,0 +1,28 @@
+version: '3'
+services:
+  apache:
+    image: httpd:2.4.41
+    ports:
+      - 80:80
+    volumes:
+      - ./html:/usr/local/apache2/htdocs
+  mysql:
+    image: mysql:8.0.33
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqladmin@123
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+  php:
+    image: php:8.1.18-apache
+    volumes:
+      - ./html:/var/www/html
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=phpadmin@123
+    ports:
+      - 8080:80
